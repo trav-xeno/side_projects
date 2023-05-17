@@ -1,0 +1,11 @@
+//hello world
+print("Hello, World!")
+//basic variable
+let someNumber = 42
+let someBoolean = true
+let someString = "Welcome to Grain!"
+
+//tuples
+let user = ("john doe",34,"green")
+let (name, age, favcolor) = user
+print("name: \(name), age: \(age), favcolor: \(favcolor)")
