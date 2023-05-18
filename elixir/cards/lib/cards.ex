@@ -21,7 +21,7 @@ defmodule Cards do
               "Jack", "Queen", "King"]
     #list comprehension returns list of cards
     for suit <- suits, value <- values do
-      " #{value} of #{suit} "
+      "#{value} of #{suit} "
     end
   end
 
@@ -65,6 +65,51 @@ defmodule Cards do
     card = Enum.at(deck, 0)
     newdeck = Enum.drop(deck, 1)
     {card, newdeck}
+  end
+
+
+  @doc """
+  retrieve_card_value
+  params: card
+  returns: value of card
+  """
+  def retrieve_card_value(card) do
+    face_cards = ["King","Queen","Jack"]
+    if String.contains?(card,face_cards) do
+      10
+    else
+        String.to_integer(String.slice(card, 0..1) |> String.trim())
+      end
+  end
+
+
+@doc """
+  score_hand
+  params: hand, ace value
+  returns: score of hand
+  """
+  def score_hand(hand, ace_value) do
+    #Enum.reduce returns the result of applying a function to each element
+    #in the list
+    Enum.reduce(hand, 0, fn card, score ->
+      #String.contains? returns true if card contains ace
+      if String.contains?(card, "Ace") do
+        score + ace_value
+      else
+        #String.to_integer converts string to integer
+        score + retrieve_card_value(card)
+      end
+    end)
+  end
+
+  @doc """
+  test_score_hand
+  params: none
+  returns: score of hand
+  """
+  def test_score_hand do
+    hand = ["8 of C", "King of D", "2 of H"]
+    score_hand(hand, 1)
   end
 
 
