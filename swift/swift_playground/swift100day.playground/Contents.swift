@@ -74,8 +74,8 @@ print("are the strings the same \(result)")
 //returns a dict swift doesn't know dicts values exsits so defulats are reqiured tuples not so much
 func getUserDict() -> [String: String] {
     [
-        "firstName": "Taylor",
-        "lastName": "Swift"
+        "firstName": "neo",
+        "lastName": "vim"
     ]
 }
 
@@ -85,7 +85,7 @@ print("Name: \(userDict["firstName", default: "Anonymous"]) \(userDict["lastName
 
 //returns a tuple
 func getUserTuple() -> (firstName: String, lastName: String) {
-    (firstName: "Taylor", lastName: "Swift")
+    (firstName: "neo", lastName: "vim")
 }
 
 let userTuple = getUserTuple()
@@ -201,5 +201,68 @@ func makeArray(size: Int, using generator: () -> Int) -> [Int] {
 
 let newRolls = makeArray(size: 20, using: generateNumber)
 print(newRolls)
+
+//structs
+struct Element {
+    let atomicNumber: Int
+    let atomicMass: Double
+    let name: String
+    let symbol: String
+    let group: String
+    //add Electron Configuration, melting point, denisty for fun
+    //remind mutating func for those that change data of struct
+    func printSummary(){
+        print("""
+            Element
+                \(atomicNumber)
+                \(symbol)
+            \(name)
+            \(atomicMass) u
+            \(group)
+        """)
+    }
+    
+}
+let ti = Element(atomicNumber: 22, atomicMass: 47.867, name: "Titanium", symbol: "Ti", group: "Transition Metal")
+ti.printSummary()
+
+//justa basic account struct there should be safety checks and some immutable propteries along with a queue of pending transactions idk
+struct BankAccount {
+    private var balance: Double
+    
+    init(funds: Double){
+        self.balance = funds
+    }
+    
+    
+    func accountBalance() -> Double{
+        return balance
+    }
+    
+    mutating func deposit(amount: Double) {
+        balance += amount
+    }
+    
+
+    mutating func withdraw(amount: Double) -> Bool {
+        if balance >= amount {
+            balance -= amount
+            return true
+        } else {
+            return false
+        }
+    }
+}
+var account = BankAccount(funds:2000.0)
+
+account.deposit(amount: 100.0)
+let success = account.withdraw(amount: 240.55)
+
+if success {
+    print("Withdrew money successfully")
+} else {
+    print("Failed to withdraw the money. Not enough funds")
+}
+print("current balance \(account.accountBalance())")
 
 
