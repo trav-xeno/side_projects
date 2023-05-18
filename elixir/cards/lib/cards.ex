@@ -19,6 +19,7 @@ defmodule Cards do
     suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
     values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
               "Jack", "Queen", "King"]
+    #list comprehension returns list of cards
     for suit <- suits, value <- values do
       "#{value} of #{suit}"
     end
@@ -43,5 +44,50 @@ defmodule Cards do
     Enum.member?(cards, card)
   end
 
+  @doc """
+  deal_hand
+  params: list of cards aka deck and number of cards to deal
+  returns: tuple of hand and new deck
+  """
+  def deal_hand(deck, handsize) do
+    #Enum.split returns tuple of two lists breaks it out into two variables
+    Enum.split(deck, handsize)
+  end
+
+  @doc """
+  game_start
+  params: none
+  returns: tuple of hand and new deck
+  """
+  def game_start do
+    deck = create_deck()
+    shuffled_deck = shuffle_deck(deck)
+    {player1, newdeck} = deal_hand(shuffled_deck, 5)
+    { _ , gamedeck } = deal_hand(newdeck, 5) #cpu hand
+    "player1 hand: #{player1} \n game deck: #{gamedeck}"
+  end
+
+  @doc """
+  save_game save game state to file
+  params: deck, player1, player2
+  returns: none
+  """
+  def save_game(deck, player1, player2) do
+    # to_binary returns a binary representation of the term
+    bin = :erlang.term_to_binary({deck, player1, player2})
+    File.write("elixir_game", bin )
+  end
+
+  @doc """
+  load_game load game state from file
+  params: none
+  returns: tuple of deck, player1, player2
+  """
+  def load_game do
+    # read file into binary
+    bin = File.read("elixir_game")
+    # binary_to_term converts binary to term ready for pattern matching
+    :erlang.binary_to_term(bin)
+  end
 
 end
