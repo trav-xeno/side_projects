@@ -85,9 +85,12 @@ defmodule Cards do
   """
   def load_game do
     # read file into binary
-    bin = File.read("elixir_game")
-    # binary_to_term converts binary to term ready for pattern matching
-    :erlang.binary_to_term(bin)
+    {status, bin} = File.read("elixir_game")
+    case status do
+      # binary_to_term converts binary to term ready for pattern matching
+      :ok -> :erlang.binary_to_term(bin)
+      :error -> "file not found"
+    end
   end
 
 end
