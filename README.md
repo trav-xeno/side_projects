@@ -12,13 +12,14 @@ These are small or just to mess around with to stay updated with the programming
 - Zig
 - Elixir
 - Kotlin
-- Grain (WASM)
 - Ocaml
 - Js/TS
+- Scala
 
 Maybes:
 - Nim 
 - R
 - C/C++
+- Grain
 - Mojo (whenever it gets open sourced)
 
