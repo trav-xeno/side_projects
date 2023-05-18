@@ -1,6 +1,6 @@
 defmodule Cards do
   @moduledoc """
-  simple cards console app
+  simple cards console app playing blackjack
   """
 
   @doc """
@@ -62,8 +62,8 @@ defmodule Cards do
   def game_start do
     deck = create_deck()
     shuffled_deck = shuffle_deck(deck)
-    {player1, newdeck} = deal_hand(shuffled_deck, 5)
-    { _ , gamedeck } = deal_hand(newdeck, 5) #cpu hand
+    {player1, newdeck} = deal_hand(shuffled_deck, 2)
+    { _cpu , gamedeck } = deal_hand(newdeck, 2) #cpu hand
     "player1 hand: #{player1} \n game deck: #{gamedeck}"
   end
 
@@ -72,9 +72,9 @@ defmodule Cards do
   params: deck, player1, player2
   returns: none
   """
-  def save_game(deck, player1, player2) do
+  def save_game(deck, player1, cpu) do
     # to_binary returns a binary representation of the term
-    bin = :erlang.term_to_binary({deck, player1, player2})
+    bin = :erlang.term_to_binary({deck, player1, cpu})
     File.write("elixir_game", bin )
   end
 
@@ -82,11 +82,13 @@ defmodule Cards do
   load_game load game state from file
   params: none
   returns: tuple of deck, player1, player2
+  remind to futureself :ok and :error is called atom
   """
   def load_game do
-    # read file into binary
+    # read file into binary could make this a single case statement
     {status, bin} = File.read("elixir_game")
     case status do
+      # could wrtie {:ok, bin} -> :erlang.binary_to_term(bin) if case was file.read
       # binary_to_term converts binary to term ready for pattern matching
       :ok -> :erlang.binary_to_term(bin)
       :error -> "file not found"
