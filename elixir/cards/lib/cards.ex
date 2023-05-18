@@ -16,12 +16,12 @@ defmodule Cards do
   note: implicit return
   """
   def create_deck do
-    suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+    suits = ["C", "D", "H", "S"]
     values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
               "Jack", "Queen", "King"]
     #list comprehension returns list of cards
     for suit <- suits, value <- values do
-      "#{value} of #{suit}"
+      " #{value} of #{suit} "
     end
   end
 
@@ -55,13 +55,29 @@ defmodule Cards do
   end
 
   @doc """
+  deal_card deals a single card from deck
+  params: deck
+  returns: tuple of card and new deck
+  """
+  def deal_card(deck) do
+    #Enum.take returns a list of the first n elements
+    #Enum.at returns the element at index n
+    card = Enum.at(deck, 0)
+    newdeck = Enum.drop(deck, 1)
+    {card, newdeck}
+  end
+
+
+
+  @doc """
   game_start
   params: none
   returns: tuple of hand and new deck
+  after reading the code realized I should have used pipe operator
   """
   def game_start do
-    deck = create_deck()
-    shuffled_deck = shuffle_deck(deck)
+    shuffled_deck = create_deck()
+                      |> shuffle_deck()
     {player1, newdeck} = deal_hand(shuffled_deck, 2)
     { _cpu , gamedeck } = deal_hand(newdeck, 2) #cpu hand
     "player1 hand: #{player1} \n game deck: #{gamedeck}"
