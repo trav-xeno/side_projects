@@ -1,5 +1,11 @@
-# SWIFT UI - PLAYGROUND
+# SWIFT UI and PLAYGROUND
 small projects to relearn swiftUI/swift and to see what changed since that last time I played around with swift
+
+### projects
+- playgound: covers basics of Swift 
+- swiftUI: covers basics of swiftUI
+    - [x] create a check spliter app
+    - [x] create an interactive periodic table
 
 
 ### setup system

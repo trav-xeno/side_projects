@@ -78,8 +78,8 @@ defmodule Cards do
     if String.contains?(card,face_cards) do
       10
     else
-        String.to_integer(String.slice(card, 0..1) |> String.trim())
-      end
+      String.to_integer(String.slice(card, 0..1) |> String.trim())
+    end
   end
 
 
@@ -90,13 +90,10 @@ defmodule Cards do
   """
   def score_hand(hand, ace_value) do
     #Enum.reduce returns the result of applying a function to each element
-    #in the list
     Enum.reduce(hand, 0, fn card, score ->
-      #String.contains? returns true if card contains ace
       if String.contains?(card, "Ace") do
         score + ace_value
       else
-        #String.to_integer converts string to integer
         score + retrieve_card_value(card)
       end
     end)

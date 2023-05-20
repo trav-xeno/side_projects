@@ -50,7 +50,8 @@ people.insert("Samuel L Jackson")
 enum Weekday {
     case monday, tuesday, wednesday, thursday, friday,saturday,sunday
 }
-let username = usr["usrname"]
+//example of handling optionals there is also if let and guard let, but  for this exmaple it works
+let username = usr["usrname"] ?? "Nil"
 print(Weekday.saturday)
 print("username: \(username)")
 
@@ -149,8 +150,6 @@ let perfectpwd = "@3dFe98#0er"
 var pwdresult = ""
 //Now try
 do {
-    //pwdresult = try checkPassword(password: badpwd)
-    //pwdresult = try checkPassword(password: weakpwd)
     pwdresult = try checkPassword(password: mehpwd)
     print(pwdresult)
     pwdresult = try checkPassword(password: perfectpwd)
@@ -163,7 +162,10 @@ do {
     print("12345 is dumb stop")
 }
 
-
+//or this way
+let pwdresult1 = (try? checkPassword(password: badpwd) ) ?? "fail"
+let pwdresult2 = (try? checkPassword(password: weakpwd) ) ?? "failure"
+print("is vaild pwdresult1: \(pwdresult1) is pwdresult2 valid: \(pwdresult2)")
 //closures
 let team = ["Gloria", "Suzanne", "Piper", "Tiffany", "Tasha"]
 let captainFirstTeam = team.sorted { name1, name2 in
@@ -264,5 +266,132 @@ if success {
     print("Failed to withdraw the money. Not enough funds")
 }
 print("current balance \(account.accountBalance())")
+
+
+
+//Generally speaking I know some of these design descions aren't great. I just wanted to mess around
+enum Vehicle:String {
+    case Bike, Car, Truck, Bus, Train, Walk
+}
+//swift version of interfaces called protocols completely fogot about this
+protocol TransportationMode {
+    var type: Vehicle { get }
+    func estimateTime(for distance: Int) -> Int
+    func travel(distance: Int)
+}
+
+
+
+//basic implements protocol
+struct Car: TransportationMode {
+    let type = Vehicle.Car
+    func estimateTime(for distance: Int) -> Int {
+        distance / 50
+    }
+
+    func travel(distance: Int) {
+        print("I'm driving \(distance)km.")
+    }
+
+    func openSunroof() {
+        print("It's a nice day!")
+    }
+}
+
+
+
+
+
+func commute(distance: Int, using vehicle: TransportationMode) {
+    if vehicle.estimateTime(for: distance) > 100 {
+        print("That's too slow! I'll try a different vehicle.")
+    } else {
+        vehicle.travel(distance: distance)
+    }
+}
+
+func getTravelEstimates(using vehicles: [TransportationMode], distance: Int) {
+    for vehicle in vehicles {
+        let estimate = vehicle.estimateTime(for: distance)
+        print("\(vehicle.type): \(estimate) hours to travel \(distance)km")
+    }
+}
+
+struct Bicycle: TransportationMode {
+    let type = Vehicle.Bike
+    var passengerCount = 1
+    
+    func estimateTime(for distance: Int) -> Int {
+        distance / 10
+    }
+
+    func travel(distance: Int) {
+        print("I'm cycling \(distance)km.")
+    }
+}
+
+
+
+let car = Car()
+let bike = Bicycle()
+commute(distance: 100, using: car)
+getTravelEstimates(using: [bike, car], distance: 89)
+
+
+//practice on extensions forgot about these as well
+//extneding type functionality similar to protoype in javascript
+//trimed and trim naming convention (this as well) one returns new stored while trim does it inplace
+extension String {
+    //trimspaces returns new string
+    func trimmedSpaces() -> String {
+           self.trimmingCharacters(in: .whitespacesAndNewlines)
+       }
+    mutating func trimSpaces() {
+        self = self.trimmedSpaces()
+    }
+    //might be useful for certain times but wanted to practice
+    var lines: [String]{
+        self.components(separatedBy: .newlines)
+    }
+}
+let trimStr = "  trying out triming  "
+let trimedStr = trimStr.trimmedSpaces()
+print("String prior to trimming: \(trimStr) after: \(trimedStr)")
+let multilineSTr = """
+Wiriting code is fun.
+But you really have to stay on top of tech changes and its easy to forget aspects.
+Db's are more often then not a bottleneck.
+Git is a god sent and a monster all in one happy contradiction.
+Microservices can make certian projects easier or becomes a headache waiting to happen.
+Java has some uses, but oh boy is it annoying to write everything in object and inheritance can create a nightmare if design patterns are viewed more like guidlines then sctrict set of rules.
+My favorite programming languages are in no particular order, Go, Rust, Zig, Kotlin, Nim, python, javascript, Elixir, Ocaml, Haskell, and C#.
+My favorite frameowkrs are, Svelte, Django, Fastapi, Spring boot(kotlin/java), Vue 3, Tauri, Angular, React, C# excosystem, Bevy, Pytorch, Pheonix, Hapi.js, Express.js, Meteor.js.
+That should cover many technologies and to behonest things chagne to offten that these lists will most likely change.
+"""
+let lineCount = multilineSTr.lines.count
+let linesInMsg = multilineSTr.lines
+
+print("line count: \(lineCount)  ")
+for line in linesInMsg {
+    print(line)
+}
+
+
+ /* handling optionals one way
+  guard let is similar but in reverse of if let   so else goes first then normal code after
+  var username: String? = nil
+
+  if let unwrappedName = username {
+      print("We got a user: \(unwrappedName)")
+  } else {
+      print("The optional was empty.")
+  }
+  below handling multiple optionals
+  */
+
+let names = ["Arya", "Bran", "Robb", "Sansa"]
+
+let chosen = names.randomElement()?.uppercased() ?? "No one"
+print("Next in line: \(chosen)")
 
 
