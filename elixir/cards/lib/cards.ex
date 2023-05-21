@@ -100,6 +100,94 @@ defmodule Cards do
   end
 
   @doc """
+  hit_or_stay prompts user to hit or stay
+  params: none
+  returns: true if hit, false if stay
+  """
+  def hit_or_stay do
+    IO.puts("Hit or Stay?")
+    answer = IO.gets(" |> ") |> String.trim()
+    answer = String.downcase(answer)
+    if answer == "hit" || answer == "hit me" do
+      true
+    else
+      false
+    end
+  end
+
+  @doc """
+  compare_scores compares scores of player and cpu
+  params: player score, cpu score
+  returns: true if player wins, false if cpu wins
+  """
+  def compare_scores(player_score, cpu_score) do
+
+    if player_score > cpu_score do
+      true
+    else
+      false
+    end
+  end
+
+  @doc """
+  reveal_hand reveals hand and determines winner
+  params: deck, player1, cpu
+  returns: none
+  """
+  def reveal_hand(player1, cpu) do
+    IO.puts("Player1 hand: #{player1}")
+    IO.puts("Player1 score: #{score_hand(player1, 1)}" )
+    IO.puts("CPU hand: #{cpu}")
+    IO.puts("CPU score: #{score_hand(cpu, 1)}")
+    if score_hand(player1, 1) > 21 do
+      IO.puts("Player1 busts")
+      IO.puts("CPU wins")
+    else
+      if score_hand(cpu, 1) > 21 do
+        IO.puts("CPU busts")
+        IO.puts("Player1 wins")
+      else
+        if score_hand(player1, 1) == score_hand(cpu, 1) do
+          IO.puts("Its a push neither player wins")
+        else
+          if compare_scores(score_hand(player1, 1), score_hand(cpu, 1)) do
+            IO.puts("Player1 wins")
+          else
+           IO.puts("CPU wins")
+          end
+        end
+      end
+    end
+  end
+
+  @doc """
+  game_loop loops through game
+  params: deck, player1, cpu
+  returns: none
+  """
+  def game_loop(deck, player1, cpu) do
+    IO.puts("Player1 hand: #{player1}")
+    IO.puts("Player1 score: #{score_hand(player1, 1)}")
+    IO.puts("CPU frist card: #{List.first(cpu)}")
+    if hit_or_stay() do
+      {card, newdeck} = deal_card(deck)
+      newhand = player1 ++ [card]
+      Io.puts("Cpu hand: #{cpu}")
+      if score_hand(cpu, 1) < 17 do
+        {cpuCard, newdeck2} = deal_card(newdeck)
+        newcpu = cpu ++ [cpuCard]
+        game_loop(newdeck2, newhand, newcpu)
+      end
+      game_loop(newdeck, newhand, cpu)
+    else
+      reveal_hand(player1, cpu)
+    end
+end
+
+
+
+
+  @doc """
   test_score_hand
   params: none
   returns: score of hand
@@ -121,8 +209,8 @@ defmodule Cards do
     shuffled_deck = create_deck()
                       |> shuffle_deck()
     {player1, newdeck} = deal_hand(shuffled_deck, 2)
-    { _cpu , gamedeck } = deal_hand(newdeck, 2) #cpu hand
-    "player1 hand: #{player1} \n game deck: #{gamedeck}"
+    { cpu , gamedeck } = deal_hand(newdeck, 2) #cpu hand
+    game_loop(gamedeck, player1, cpu)
   end
 
   @doc """

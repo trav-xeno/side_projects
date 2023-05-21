@@ -2,7 +2,7 @@
 general folder contain a host of projects
 
 ## Projects
-- basic console app probally just a card game or something similar
+- black jack - is almost complete only needs testing to check some code changes 
 - phoenix app 
 
 ## elixir commands

@@ -1,5 +1,7 @@
 # Cards
 simple card game
+<strong> NOTE: elixir module IO seems to fail to be found or load properly on my local machine every other time I compile. So I will have to look into this problem and see if there is a perminate fix.</strong>
+
 
 ## Installation
 
