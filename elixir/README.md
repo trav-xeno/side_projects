@@ -2,7 +2,7 @@
 general folder contain a host of projects
 
 ## Projects
-- black jack - is almost complete only needs testing to check some code changes 
+- black jack - is almost complete only needs Ace edge cases  
 - phoenix app 
 
 ## elixir commands

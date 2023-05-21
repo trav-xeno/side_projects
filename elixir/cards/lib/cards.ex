@@ -106,8 +106,7 @@ defmodule Cards do
   """
   def hit_or_stay do
     IO.puts("Hit or Stay?")
-    answer = IO.gets(" |> ") |> String.trim()
-    answer = String.downcase(answer)
+    answer = IO.gets(" |> ") |> String.trim() |> String.downcase()
     if answer == "hit" || answer == "hit me" do
       true
     else
@@ -161,6 +160,26 @@ defmodule Cards do
   end
 
   @doc """
+  cpu_turn handle dealer turn
+  params: deck, cpu
+  returns: {newdeck, newcpuhand}
+  """
+  def cpu_turn(deck, cpu) do
+    if score_hand(cpu, 1) < 17 do
+      {cpuCard, newdeck} = deal_card(deck)
+      newcpu = cpu ++ [cpuCard]
+      IO.puts("CPU hand: #{newcpu} score: #{score_hand(cpu, 1)}")
+      {newdeck, newcpu}
+    else
+      IO.puts("CPU score: #{score_hand(cpu, 1)}")
+      {deck, cpu}
+    end
+
+  end
+
+
+
+  @doc """
   game_loop loops through game
   params: deck, player1, cpu
   returns: none
@@ -168,18 +187,19 @@ defmodule Cards do
   def game_loop(deck, player1, cpu) do
     IO.puts("Player1 hand: #{player1}")
     IO.puts("Player1 score: #{score_hand(player1, 1)}")
-    IO.puts("CPU frist card: #{List.first(cpu)}")
     if hit_or_stay() do
       {card, newdeck} = deal_card(deck)
       newhand = player1 ++ [card]
-      Io.puts("Cpu hand: #{cpu}")
-      if score_hand(cpu, 1) < 17 do
-        {cpuCard, newdeck2} = deal_card(newdeck)
-        newcpu = cpu ++ [cpuCard]
+      IO.puts("Cpu hand: #{cpu}")
+      {newdeck2 , newcpu}  = cpu_turn(newdeck, cpu)
+      if score_hand(newhand, 1) > 21 do
+        IO.puts("Player1 busts")
+        IO.puts("CPU wins")
+      else
         game_loop(newdeck2, newhand, newcpu)
       end
-      game_loop(newdeck, newhand, cpu)
     else
+      cpu_turn(deck, cpu)
       reveal_hand(player1, cpu)
     end
 end
@@ -210,6 +230,7 @@ end
                       |> shuffle_deck()
     {player1, newdeck} = deal_hand(shuffled_deck, 2)
     { cpu , gamedeck } = deal_hand(newdeck, 2) #cpu hand
+    IO.puts("CPU frist card: #{List.first(cpu)}")
     game_loop(gamedeck, player1, cpu)
   end
 
