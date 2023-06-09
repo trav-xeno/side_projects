@@ -13,7 +13,7 @@ public class BankAccount
         Console.WriteLine("Changes saved");
     }
     public void UpdateBalance( ){
-            //loop through the deposits array
+
             foreach (var deposit in Deposits)
             {
                 //change the color of the text to blue
@@ -26,7 +26,6 @@ public class BankAccount
             Console.Write("Withdrawals: ");
             foreach (var withdrawal in Withdrawals)
             {
-                //change the color of the text to red
                 Console.Write($"{withdrawal}, ");
                 totalWithdrawn += withdrawal;
                 WithdrawFunds(withdrawal);
@@ -50,13 +49,16 @@ public class BankAccount
 
 
 
-//create a namespace called ConsoleApp then a class called program
 namespace ConsoleApp
 {
     class Program
     {
-
-        //create a methoed called GetData, which takes in a string called filename and read a json file
+        /// <summary>
+        /// GetData method reads a json file and deserializes it
+        /// </summary>
+        /// <param name="filename">the name of the file to read</param>
+        /// <returns>BankAccount object</returns>
+        /// <exception cref="Exception">throws an exception if the file is null or there was an error retrieving the file</exception>
         static BankAccount GetData(string filename)
         {
             //read the json file
@@ -65,16 +67,16 @@ namespace ConsoleApp
             BankAccount? account = JsonSerializer.Deserialize<BankAccount>(json);
             if (account == null)
             {
-                throw new Exception("Account is null");
+                throw new Exception("Account is null or there was an error retrieving the file");
             }
             return account;
         }
 
-        //create a funtion that take in a new balance and a oldbalance and return the difference
         static decimal GetDifference(decimal newBalance, decimal oldBalance)
         {
             return newBalance - oldBalance;
         }
+
         /// <summary>
         /// main method is the entry point of the program
         /// </summary>
@@ -107,13 +109,12 @@ namespace ConsoleApp
                 Console.WriteLine($"Balance after changes: {account.Balance}");
 
             }
-            //change the color of the text to blue
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"Total deposited: {account.totalDeposited}");
-            //change the color of the text to red
+
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Total withdrawn: {account.totalWithdrawn}");
-            //change the color of the text to magenta
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             account.saveChanges();
         }
