@@ -6,9 +6,9 @@ some projects I was messing around with in C#. The purpose is to stay familiar w
 - wpf app is coming soon(updating once I'm done building my pc)
 ## future projects
 - blazor
-- wpf app
-- .net mvc or web app
-- and maybe xamarin
+- wpf or MAUI app
+- .net ml or micro services
+- and maybe F# 
 
 #### dotnet cli commands
 create a new project....these are just reminders for me
