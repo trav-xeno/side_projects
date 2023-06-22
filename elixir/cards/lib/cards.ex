@@ -13,7 +13,7 @@ defmodule Cards do
   @doc """
   creates deck of cards in order, prints to console
   returns: list of cards
-  note: implicit return
+  note reminder: implicit return
   """
   def create_deck do
     suits = ["C", "D", "H", "S"]
@@ -203,20 +203,6 @@ defmodule Cards do
       reveal_hand(player1, cpu)
     end
 end
-
-
-
-
-  @doc """
-  test_score_hand
-  params: none
-  returns: score of hand
-  """
-  def test_score_hand do
-    hand = ["8 of C", "King of D", "2 of H"]
-    score_hand(hand, 1)
-  end
-
 
 
   @doc """

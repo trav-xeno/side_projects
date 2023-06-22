@@ -18,6 +18,7 @@ create a new project....these are just reminders for me
 - `dotnet new mvc -o <project name>` creates a new mvc app
 - `dotnet new blazor -o <project name>` creates a new blazor app
 - `dotnet new wpf -o <project name>` creates a new wpf app
+- 'dotnet new maui -n 
 - `dotnet new console -lang F# -o <project name>` creates a new console app in F# (might be used to do data science stuff) 
 run a project
 - `dotnet run` runs the project
