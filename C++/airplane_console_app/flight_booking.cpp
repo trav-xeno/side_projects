@@ -1,0 +1,4 @@
+/*
+users can book a flight 
+contains functions for handling fairs and seats
+*/
