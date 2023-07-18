@@ -1,3 +1,8 @@
+/*
+run while loop to simulate airplane console app
+*/
+
+
 #include <iostream>
 using namespace std;
 

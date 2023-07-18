@@ -1,6 +1,12 @@
 #ifndef AIRCRAFT_H_
 #define AIRCRAFT_H_
 
+/*
+defines the aircraft class
+TODO: add crew class and related methods to aircraft class
+*/
+
+
 #include <vector>
 #include <string>
 

@@ -3,6 +3,9 @@ This will contain some c++ projects ranging from simple to complex. I may try c+
 
 ## Projects
 - console app - airplane reservation system/flight booking/monitoring system
+    - weighted graph algorithms - not added yet
+    - sqlite3 database - in progress
+    - multi-threading - not added yet
 - openGL 
 - vulkan 
 - openCV
